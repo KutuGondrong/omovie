@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OMovie</string>
+    <string name="popular">POPULAR</string>
+    <string name="top_rated">TOP RATED</string>
+    <string name="favorite">FAVORITE</string>
+    <string name="could_not_be_load">Could not be load</string>
+    <string name="overview">Overview</string>
+    <string name="retry">Retry</string>
+    <string name="votes">%1$s Votes</string>
+    <string name="rating">%1$s/10</string>
+    <string name="trailer">Trailer</string>
+</resources>
