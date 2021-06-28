@@ -1,5 +1,6 @@
 package com.kutugondrong.omovie.screen
 
+import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.kutugondrong.omovie.TaskExecutorWithIdlingResourceRule
 import com.kutugondrong.omovie.helper.selectTabAtPosition
 import com.kutugondrong.omovie.helper.waitViewShown
 import com.kutugondrong.omovie.launchFragmentInHiltContainer
+import com.kutugondrong.omovie.screen.detail.DetailMovieFragment
 import com.kutugondrong.omovie.screen.main.MainFragment
 import com.kutugondrong.omovie.screen.main.MainFragmentDirections
 import com.kutugondrong.omovie.screen.toprate.TopRateMoviesFragment
@@ -112,6 +114,9 @@ open class TopRateMoviesFragmentTest{
             MainFragmentDirections.actionMainFragmentToDetailMovieFragment(
                 data!!
             ))
+        var bundle = Bundle()
+        bundle.putParcelable("movie", data)
+        launchFragmentInHiltContainer<DetailMovieFragment>(fragmentFactory = fragmentFactory, fragmentArgs = bundle)
     }
 
 }

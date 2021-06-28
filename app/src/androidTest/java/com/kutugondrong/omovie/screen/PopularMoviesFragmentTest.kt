@@ -1,5 +1,6 @@
 package com.kutugondrong.omovie.screen
 
+import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import com.kutugondrong.omovie.*
 import com.kutugondrong.omovie.helper.waitViewShown
+import com.kutugondrong.omovie.screen.detail.DetailMovieFragment
 import com.kutugondrong.omovie.screen.main.MainFragment
 import com.kutugondrong.omovie.screen.main.MainFragmentDirections
 import com.kutugondrong.omovie.screen.popular.PopularMoviesFragment
@@ -109,6 +111,9 @@ open class PopularMoviesFragmentTest{
             MainFragmentDirections.actionMainFragmentToDetailMovieFragment(
                 data!!
             ))
+        var bundle = Bundle()
+        bundle.putParcelable("movie", data)
+        launchFragmentInHiltContainer<DetailMovieFragment>(fragmentFactory = fragmentFactory, fragmentArgs = bundle)
     }
 
 }

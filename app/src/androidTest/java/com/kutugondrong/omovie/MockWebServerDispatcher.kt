@@ -11,8 +11,9 @@ class MockServerDispatcher {
     internal inner class RequestDispatcher : Dispatcher() {
         override fun dispatch(request: RecordedRequest): MockResponse {
             return when (request.path) {
-                "3/movie/popular?api_key=${MovieApi.API_KEY}" -> MockResponse().setResponseCode(200).setBody(getJsonContent("fake_movie.json"))
-                "3/movie/top_rated?api_key=${MovieApi.API_KEY}" -> MockResponse().setResponseCode(200).setBody(getJsonContent("fake_movie.json"))
+                "3/movie/popular?api_key=${MovieApi.API_KEY}" -> MockResponse().setResponseCode(200).setBody(getJsonContent("fake_movies.json"))
+                "3/movie/top_rated?api_key=${MovieApi.API_KEY}" -> MockResponse().setResponseCode(200).setBody(getJsonContent("fake_movies.json"))
+                "3/movie/" -> MockResponse().setResponseCode(200).setBody(getJsonContent("fake_movie.json"))
                 else -> MockResponse().setResponseCode(400)
             }
         }
