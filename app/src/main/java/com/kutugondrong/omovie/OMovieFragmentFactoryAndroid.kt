@@ -14,9 +14,6 @@ class OMovieFragmentFactoryAndroid @Inject constructor() : FragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when(className){
             MainFragment::class.java.name -> MainFragment()
-            PopularMoviesFragment::class.java.name -> PopularMoviesFragment()
-            TopRateMoviesFragment::class.java.name -> TopRateMoviesFragment()
-            FavoriteMoviesFragment::class.java.name -> FavoriteMoviesFragment()
             DetailMovieFragment::class.java.name -> DetailMovieFragment()
             else -> super.instantiate(classLoader, className)
         }

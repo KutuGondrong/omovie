@@ -19,7 +19,7 @@
         tools:listitem="@layout/fragment_popular_movies" />
 
     <ProgressBar
-        android:id="@+id/progressLoading"
+        android:id="@+id/progressLoadingPopularMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

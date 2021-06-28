@@ -8,7 +8,15 @@ import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.TimeUnit
 
+
+/**
+ * A Junit rule that registers Architecture Components' background threads as an Espresso idling
+ * resource.
+ */
+
 class TaskExecutorWithIdlingResourceRule : CountingTaskExecutorRule() {
+    // give it a unique id to workaround an espresso bug where you cannot register/unregister
+    // an idling resource w/ the same name.
     private val id = UUID.randomUUID().toString()
     private val idlingResource: IdlingResource = object : IdlingResource {
         override fun getName(): String {

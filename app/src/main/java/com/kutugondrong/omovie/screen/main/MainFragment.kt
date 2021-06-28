@@ -14,6 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
 
+    val fragmentList = arrayListOf(
+        PopularMoviesFragment(),
+        TopRateMoviesFragment(),
+        FavoriteMoviesFragment()
+    )
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -24,11 +30,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 requireActivity().resources.getString(R.string.popular),
                 requireActivity().resources.getString(R.string.top_rated),
                 requireActivity().resources.getString(R.string.favorite)
-            )
-            val fragmentList = arrayListOf(
-                PopularMoviesFragment(),
-                TopRateMoviesFragment(),
-                FavoriteMoviesFragment()
             )
 
             val adapter = MainPagerAdapter(

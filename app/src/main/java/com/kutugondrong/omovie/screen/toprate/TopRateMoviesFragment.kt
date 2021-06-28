@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TopRateMoviesFragment : Fragment(R.layout.fragment_top_rate_movies_list) {
 
     private val viewModel by viewModels<TopRateMovieViewModel>()
-    private val adapter = TopRateMoviesRecyclerViewAdapter(
+    val adapter = TopRateMoviesRecyclerViewAdapter(
         { movieId, position ->
             checkIsFavorite(movieId, position)
         },

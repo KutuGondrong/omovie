@@ -16,9 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PopularMoviesFragment : Fragment(R.layout.fragment_popular_movies_list) {
 
-    val viewModel by viewModels<PopularMovieViewModel>()
+    private val viewModel by viewModels<PopularMovieViewModel>()
 
-    private val adapter = PopularMoviesRecyclerViewAdapter(
+    val adapter = PopularMoviesRecyclerViewAdapter(
         { movieId, btnLike ->
             checkIsFavorite(movieId, btnLike)
         },
@@ -62,7 +62,7 @@ class PopularMoviesFragment : Fragment(R.layout.fragment_popular_movies_list) {
 
         adapter.addLoadStateListener { loadState ->
             binding.apply {
-                progressLoading.isVisible = loadState.source.refresh is LoadState.Loading
+                progressLoadingPopularMovie.isVisible = loadState.source.refresh is LoadState.Loading
                 listPopularMovie.isVisible = loadState.source.refresh is LoadState.NotLoading
                 btnRetry.isVisible = loadState.source.refresh is LoadState.Error
                 txtError.isVisible = loadState.source.refresh is LoadState.Error

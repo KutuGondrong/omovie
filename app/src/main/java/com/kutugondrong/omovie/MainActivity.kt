@@ -9,13 +9,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var fragmentFactory: OMovieFragmentFactoryAndroid
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportFragmentManager.fragmentFactory = fragmentFactory
+        setContentView(R.layout.activity_main)
     }
 }

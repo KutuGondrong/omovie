@@ -3,21 +3,23 @@ package com.kutugondrong.omovie.screen
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jakewharton.espresso.OkHttp3IdlingResource
-import com.kutugondrong.omovie.*
+import com.kutugondrong.omovie.MockServerDispatcher
+import com.kutugondrong.omovie.R
+import com.kutugondrong.omovie.TaskExecutorWithIdlingResourceRule
+import com.kutugondrong.omovie.helper.selectTabAtPosition
 import com.kutugondrong.omovie.helper.waitViewShown
+import com.kutugondrong.omovie.launchFragmentInHiltContainer
 import com.kutugondrong.omovie.screen.main.MainFragment
 import com.kutugondrong.omovie.screen.main.MainFragmentDirections
-import com.kutugondrong.omovie.screen.popular.PopularMoviesFragment
-import com.kutugondrong.omovie.screen.popular.PopularMoviesRecyclerViewAdapter
+import com.kutugondrong.omovie.screen.toprate.TopRateMoviesFragment
+import com.kutugondrong.omovie.screen.toprate.TopRateMoviesRecyclerViewAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -32,11 +34,12 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import javax.inject.Inject
 
+
 @UninstallModules(AppModule::class)
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-open class PopularMoviesFragmentTest{
+open class TopRateMoviesFragmentTest{
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -66,44 +69,44 @@ open class PopularMoviesFragmentTest{
     }
 
     @Test
-    fun testVisibilityPopularMoviesFragment(){
+    fun testVisibilityTopRateMoviesFragment(){
         launchFragmentInHiltContainer<MainFragment>(fragmentFactory = fragmentFactory)
-        waitViewShown(withId(R.id.listPopularMovie))
-        onView(withId(R.id.listPopularMovie)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(1))
+        waitViewShown(withId(R.id.listTopRateMovie))
     }
 
     @Test
-    fun testScrollListPopularMovie(){
+    fun testScrollListTopRateMovie(){
         launchFragmentInHiltContainer<MainFragment>(fragmentFactory = fragmentFactory)
-        waitViewShown(withId(R.id.listPopularMovie))
+        onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(1))
+        waitViewShown(withId(R.id.listTopRateMovie))
         for (i in 1..5) {
-            onView(withId(R.id.listPopularMovie)).perform(
+            onView(withId(R.id.listTopRateMovie)).perform(
                 actionOnItemAtPosition<RecyclerView.ViewHolder>(i*19, ViewActions.scrollTo())
             )
         }
     }
 
     @Test
-    fun testOpenPopularMovie_thenNNavigateToDetailMovieFragment(){
+    fun testOpenTopRateMovie_thenNNavigateToDetailMovieFragment(){
         val navController = Mockito.mock(NavController::class.java)
-        var frag: PopularMoviesFragment? = null
+        var frag: TopRateMoviesFragment? = null
         launchFragmentInHiltContainer<MainFragment>(fragmentFactory = fragmentFactory) {
             Navigation.setViewNavController(requireView(), navController)
-            frag = this.fragmentList[0] as PopularMoviesFragment
+            frag = this.fragmentList[1] as TopRateMoviesFragment
         }
-        waitViewShown(withId(R.id.listPopularMovie))
-        for (i in 1..8) {
-            onView(withId(R.id.listPopularMovie)).perform(
-                actionOnItemAtPosition<RecyclerView.ViewHolder>(i*19, ViewActions.scrollTo())
-            )
-        }
-        onView(withId(R.id.listPopularMovie)).perform(
-            actionOnItemAtPosition<PopularMoviesRecyclerViewAdapter.ViewHolder>(8*19-1,
+        onView(withId(R.id.tabLayout)).perform(selectTabAtPosition(1))
+        waitViewShown(withId(R.id.listTopRateMovie))
+        onView(withId(R.id.listTopRateMovie)).perform(
+            actionOnItemAtPosition<RecyclerView.ViewHolder>(2, ViewActions.scrollTo())
+        )
+        onView(withId(R.id.listTopRateMovie)).perform(
+            actionOnItemAtPosition<TopRateMoviesRecyclerViewAdapter.ViewHolder>(2,
                     ViewActions.click()
                 )
         )
 
-        val data  = frag?.adapter?.getItemByPosition(8*19-1)
+        val data  = frag?.adapter?.getItemByPosition(2)
 
         Mockito.verify(navController).navigate(
             MainFragmentDirections.actionMainFragmentToDetailMovieFragment(
@@ -112,5 +115,3 @@ open class PopularMoviesFragmentTest{
     }
 
 }
-
-

@@ -1,0 +1,27 @@
+name: Android CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+    - name: Build the app
+      run: ./gradlew build
+    - name: build release 
+      run: ./gradlew assembleRelease
+    - name: list files
+      run: ls -lrt app/build/outputs/apk/release
+      
+    - name: upload artifact to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+      with:
+        appId: ${{secrets.FIREBASE_APP_ID}}
+        token: ${{secrets.FIREBASE_TOKEN}}
+        groups: testers
+        file: app/build/outputs/apk/release/app-release.apk
