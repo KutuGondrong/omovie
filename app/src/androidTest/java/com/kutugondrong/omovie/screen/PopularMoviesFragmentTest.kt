@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-open class PopularMoviesFragmentTest{
+class PopularMoviesFragmentTest{
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -114,6 +114,7 @@ open class PopularMoviesFragmentTest{
         var bundle = Bundle()
         bundle.putParcelable("movie", data)
         launchFragmentInHiltContainer<DetailMovieFragment>(fragmentFactory = fragmentFactory, fragmentArgs = bundle)
+        waitViewShown(withId(R.id.childState))
     }
 
 }
