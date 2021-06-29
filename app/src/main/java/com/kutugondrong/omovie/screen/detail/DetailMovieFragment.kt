@@ -48,7 +48,6 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
             viewModel.detailMovie.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        parentState.visibility = View.GONE
                         it.data?.let { data ->
                             Glide.with(view.context)
                                 .load(data.urlImageBackdrop)
@@ -105,14 +104,18 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
                                 btnLike.isChecked = isChecked
                             }
                         }
+                        childState.visibility = View.VISIBLE
+                        parentState.visibility = View.GONE
                     }
                     Status.LOADING -> {
+                        childState.visibility = View.GONE
                         parentState.visibility = View.VISIBLE
                         progressLoading.visibility = View.VISIBLE
                         txtError.visibility = View.GONE
                         btnRetry.visibility = View.GONE
                     }
                     Status.ERROR -> {
+                        childState.visibility = View.GONE
                         parentState.visibility = View.VISIBLE
                         progressLoading.visibility = View.GONE
                         txtError.visibility = View.VISIBLE

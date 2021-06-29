@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.*
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -41,7 +42,7 @@ import javax.inject.Inject
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-open class TopRateMoviesFragmentTest{
+class TopRateMoviesFragmentTest{
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -117,6 +118,7 @@ open class TopRateMoviesFragmentTest{
         var bundle = Bundle()
         bundle.putParcelable("movie", data)
         launchFragmentInHiltContainer<DetailMovieFragment>(fragmentFactory = fragmentFactory, fragmentArgs = bundle)
+        waitViewShown(withId(R.id.childState))
     }
 
 }
