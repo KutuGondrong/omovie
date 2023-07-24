@@ -13,7 +13,8 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.kutugondrong.omovie"
+        // Todo: Don,t forget to change the aplicationId adjust with your project firebase
+        //applicationId "com.kutugondrong.omovie"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
